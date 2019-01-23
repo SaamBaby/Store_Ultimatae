@@ -55,7 +55,7 @@ namespace StoreUltimae.Controllers
         public ActionResult ViewProduct(string ProductName)
         {
 
-            ViewBag.ProductName = ProductName
+            ViewBag.ProductName = ProductName;
             return View();
         }
 

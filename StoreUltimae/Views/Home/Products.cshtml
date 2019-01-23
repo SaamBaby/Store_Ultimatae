@@ -13,9 +13,9 @@ ViewBag.Title = "Products";
 
     <ul>
 
-@foreach(var p in Model)
+       @foreach(var p in Model)
         {
-            <li> @Html.ActionLink(p.name,"View Products", "Home", new { ProductName = p.name }, null)</li>
+          <li>@Html.ActionLink(p.name,"ViewProduct", "Home", new { ProductName = p.name }, null)</li>
         }
     </ul>
 
