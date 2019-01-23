@@ -49,7 +49,16 @@ namespace StoreUltimae.Controllers
                 products.Add(product);
             }
             // load the view and pass the data 
+            return View(products);
+
+        }
+        public ActionResult ViewProduct(string ProductName)
+        {
+
+            ViewBag.ProductName = ProductName
             return View();
         }
+
     }
+
 }
