@@ -1,22 +1,27 @@
-﻿
+﻿@model IEnumerable<StoreUltimae.Models.Product>
 
-@Model IEnumerable<StoreUltimae.Models.Product>;
     @{
 
-ViewBag.Title = "Products";
+        ViewBag.Title = "Products";
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
 
     <h2>Products</h2>
 
-   
+
 
     <ul>
 
-       @foreach(var p in Model)
+        @foreach (var p in Model)
         {
-          <li>@Html.ActionLink(p.name,"ViewProduct", "Home", new { ProductName = p.name }, null)</li>
+
+            <li>@Html.ActionLink(p.Name, "ViewProduct", "Home", new { ProductName = p. Name }, null)</li>
+
+
         }
     </ul>
+
+    
+
 
 

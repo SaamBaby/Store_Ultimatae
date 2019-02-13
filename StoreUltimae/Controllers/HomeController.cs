@@ -9,6 +9,8 @@ namespace StoreUltimae.Controllers
 {
     public class HomeController : Controller
     {
+
+        private dbModel dModel = new dbModel();
         public ActionResult Index()
         {
             return View();
@@ -38,17 +40,19 @@ namespace StoreUltimae.Controllers
 }
             // pass mock products to view  for the display
             ViewBag.Products = products;*/
-            var products = new List<Product>();
+            //var products = new List<ProductOb>();
 
-            for (int i = 1; i <= 10; i++)
-            {
+            //for (int i = 1; i <= 10; i++)
+            //{
 
-                Product product = new Product();
+            //    ProductOb product = new ProductOb();
 
-                product.name = "Product" + i.ToString();
-                products.Add(product);
-            }
-            // load the view and pass the data 
+            //    product.name = "Product" + i.ToString();
+            //    products.Add(product);
+            //}
+            //// load the view and pass the data 
+            ///
+            var products = dModel.Products.ToList();
             return View(products);
 
         }
