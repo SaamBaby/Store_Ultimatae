@@ -24,8 +24,8 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Products", "Index", "Products")</li>
                     <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
-                    <li>@Html.ActionLink("Products", "Products", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -42,7 +42,5 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
-    <script src="~/Scripts/sorttable.js"></script>
 </body>
 </html>
