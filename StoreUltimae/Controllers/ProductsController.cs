@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -9,7 +10,7 @@ using System.Web.Mvc;
 using StoreUltimae.Models;
 
 namespace StoreUltimae.Controllers
-{
+{[Authorize]
     public class ProductsController : Controller
     {
         private dbModel db = new dbModel();
@@ -18,7 +19,7 @@ namespace StoreUltimae.Controllers
         public ActionResult Index()
         {
             var products = db.Products.Include(p => p.Category);
-            return View(products.ToList());
+            return View(products.OrderBy(p => p.Category.Name).ThenBy(p => p.Name).ToList());
         }
 
         // GET: Products/Details/5
@@ -51,8 +52,37 @@ namespace StoreUltimae.Controllers
         public ActionResult Create([Bind(Include = "ProductId,Name,Description,Price,Photo,CategoryId")] Product product)
         {
             if (ModelState.IsValid)
+
+
             {
-                db.Products.Add(product);
+
+
+                // check for a file upload
+                if (Request.Files.Count > 0)
+                    {
+                        var file = Request.Files[0];
+
+                        if (file.FileName != null && file.ContentLength > 0)
+                        {
+                            // remove path from Edge uploads
+                            string fName = Path.GetFileName(file.FileName);
+
+                            string path = Server.MapPath("~/Content/img/" + fName);
+                            file.SaveAs(path);
+                            product.Photo = fName;
+
+                        System.Web.Helpers.WebImage img = new System.Web.Helpers.WebImage(path);
+                        if (img.Width > 200 && img.Height >200)  
+                            img.Resize(200, 200);
+                              img.Save(path);
+                                   }
+                    }
+                    else
+                    {
+                        // no new photo, keep the old file name
+                        product.Photo = "God help me";
+                    }
+                    db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -82,12 +112,36 @@ namespace StoreUltimae.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,Name,Description,Price,Photo,CategoryId")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductId,Name,Description,Price,Photo,CategoryId")] Product product, String CurrentPhoto)
         {
             if (ModelState.IsValid)
             {
+                // check for a file upload
+
+
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+
+                    if (file.FileName != null && file.ContentLength > 0)
+                    {
+                        // remove path from Edge uploads
+                        string fName = Path.GetFileName(file.FileName);
+
+                        string path = Server.MapPath("~/Content/img/" + fName);
+                        file.SaveAs(path);
+                        product.Photo = fName;
+                    }
+                }
+                else
+                {
+                    // no new photo, keep the old file name
+                    product.Photo = "God help me";
+                }
+
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);

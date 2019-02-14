@@ -5,23 +5,59 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+
+
+<h1>Category Details</h1>
 
 <div>
-    <h4>Category</h4>
+    <h4>@Html.DisplayFor(model => model.Name)</h4>
+
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+        <h4>Products</h4>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+        <table class="table table-hover table-striped sortable">
+
+            <th>
+
+                Name
+            </th>
+            <th>Price</th>
+            
+
+
+            @foreach (var item in Model.Products)
+            {
+            <tr>
+                <th>
+                    @item.Name
+                </th>
+
+                <th>
+                    @String.Format("{0:c}", item.Price);
+                </th>
+
+                <td>
+                    @if (item.Photo != null)
+
+
+                    {
+                        <img src="~/Content/img/@item.Photo" alt="~/Content/img/@item.Photo" width="200" height="250">
+
+                    }
+                </td>
+
+
+            </tr>
+            }
+
+        </table>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.CategoryId }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CategoryId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+

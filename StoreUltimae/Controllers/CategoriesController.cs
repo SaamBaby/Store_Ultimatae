@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using StoreUltimae.Models;
 
 namespace StoreUltimae.Controllers
-{
+{[Authorize]
     public class CategoriesController : Controller
     {
         private dbModel db = new dbModel();
@@ -17,7 +17,7 @@ namespace StoreUltimae.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            return View(db.Categories.OrderBy(c => c.Name).ToList());
         }
 
         // GET: Categories/Details/5

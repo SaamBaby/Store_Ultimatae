@@ -1,42 +1,65 @@
-﻿@model IEnumerable<StoreUltimae.Models.Category>
+﻿@model IEnumerable<StoreUltimae.Models.Product>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
-<h2>Index</h2>
+<h2>Products</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
-
 </p>
-<div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped sortable">
+<table class="table table-bordered table-hover table-striped sortable">
+    <tr>
+        <th>
+            Category
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Photo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @if (item.Photo != null)
 
-            </th>
-            <th></th>
+
+                {
+                    <img src="~/Content/img/@item.Photo" alt="~/Content/img/@item.Photo" width="150" height="200">
+                   
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+            </td>
         </tr>
+    }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-
-                    @Html.ActionLink(item.Name, "Details", new { id = item.CategoryId })
-
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.CategoryId }) |
-
-                    @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId })
-                </td>
-            </tr>
-        }
-
-    </table>
-</div>
+</table>
