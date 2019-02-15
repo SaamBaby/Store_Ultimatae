@@ -16,6 +16,7 @@ namespace StoreUltimae.Controllers
         private dbModel db = new dbModel();
 
         // GET: Products
+      [AllowAnonymous]
         public ActionResult Index()
         {
             var products = db.Products.Include(p => p.Category);

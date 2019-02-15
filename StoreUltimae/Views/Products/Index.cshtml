@@ -6,11 +6,12 @@
 }
 
 <h2>Products</h2>
-
+@if (Request.IsAuthenticated) {
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table table-bordered table-hover table-striped sortable">
+}
+<table class="table  table-hover table-striped sortable">
     <tr>
         <th>
             Category
@@ -32,34 +33,38 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @if (item.Photo != null)
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @if (item.Photo != null)
 
 
-                {
-                    <img src="~/Content/img/@item.Photo" alt="~/Content/img/@item.Photo" width="150" height="200">
-                   
-                }
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
-            </td>
-        </tr>
+            {
+                <img src="~/Content/img/@item.Photo" alt="~/Content/img/@item.Photo" width="150" height="200">
+
+            }
+        </td>
+        @if (Request.IsAuthenticated) {
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) 
+            |
+            @Html.ActionLink("Details", "Details", new { id = item.ProductId }) 
+            |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+        </td>
+        }
+    </tr>
     }
 
 </table>

@@ -9,12 +9,13 @@ using System.Web.Mvc;
 using StoreUltimae.Models;
 
 namespace StoreUltimae.Controllers
-{[Authorize]
+{  [Authorize]
     public class CategoriesController : Controller
     {
         private dbModel db = new dbModel();
 
         // GET: Categories
+       
         public ActionResult Index()
         {
             return View(db.Categories.OrderBy(c => c.Name).ToList());
