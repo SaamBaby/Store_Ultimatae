@@ -6,7 +6,7 @@
 }
 
 <h2>Products</h2>
-@if (Request.IsAuthenticated) {
+@if (User.IsInRole("Administrator")) {
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -55,7 +55,7 @@
 
             }
         </td>
-        @if (Request.IsAuthenticated) {
+        @if (User.IsInRole("Administrator")) {
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) 
             |

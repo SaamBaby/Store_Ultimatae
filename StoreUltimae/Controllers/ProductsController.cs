@@ -10,7 +10,8 @@ using System.Web.Mvc;
 using StoreUltimae.Models;
 
 namespace StoreUltimae.Controllers
-{[Authorize]
+{
+    [Authorize(Roles = "Administrator")]
     public class ProductsController : Controller
     {
         private dbModel db = new dbModel();
@@ -137,7 +138,7 @@ namespace StoreUltimae.Controllers
                 else
                 {
                     // no new photo, keep the old file name
-                    product.Photo = "God help me";
+                    product.Photo = CurrentPhoto;
                 }
 
                 db.Entry(product).State = EntityState.Modified;

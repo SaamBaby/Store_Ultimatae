@@ -9,7 +9,8 @@ using System.Web.Mvc;
 using StoreUltimae.Models;
 
 namespace StoreUltimae.Controllers
-{  [Authorize]
+{
+    [Authorize(Roles = "Administrator")]
     public class CategoriesController : Controller
     {
         private dbModel db = new dbModel();
